@@ -1,11 +1,9 @@
 package com.github.christopheml.aoc2022.day01
 
-import com.github.christopheml.aoc2022.common.PuzzleInput
-import com.github.christopheml.aoc2022.common.split
+import com.github.christopheml.aoc2022.common.TextInput
 
 fun main() {
-    val sortedCalories = PuzzleInput(1)
-        .asList()
+    val sortedCalories = TextInput(1)
         .split("")
         .map { it.sumOf(String::toInt) }
         .sortedDescending()
