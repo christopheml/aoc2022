@@ -16,16 +16,20 @@ abstract class Solution<In, Out>(private val day: Int) {
     }
 
     private fun runPart(number: Int, input: Input<In>, runnable: (Input<In>) -> Out) {
-        val timer = Timer()
-        val result = runnable.invoke(input)
-        val time = timer.readString()
+        try {
+            val timer = Timer()
+            val result = runnable.invoke(input)
+            val time = timer.readString()
 
-        var representation = when (result) {
-            null -> "<no result>"
-            is String -> result
-            else -> result.toString()
+            var representation = when (result) {
+                null -> "<no result>"
+                is String -> result
+                else -> result.toString()
+            }
+            println("\tPart %d (time: %s): %s".format(number, time, representation))
+        } catch (_: NotImplementedError) {
+            println("\tPart %d: <not implemented>".format(number))
         }
-        println("\tPart %d (time: %s): %s".format(number, time, representation))
     }
 
 }
