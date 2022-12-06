@@ -5,14 +5,6 @@ fun String.halves(): Pair<String, String> {
     return Pair(this.substring(0, cutPoint), this.substring(cutPoint))
 }
 
-fun String.asList(): List<Char> {
-    return this.toCharArray().asList()
-}
-
-fun String.asSet(): Set<Char> {
-    return this.toCharArray().toSet()
-}
-
 fun String.toPair(separator: Char): Pair<String, String> {
     return when (val cutPoint = this.indexOf(separator)) {
         -1 -> Pair(this, "")
@@ -24,3 +16,7 @@ fun String.toRange(separator: Char = '-'): IntRange {
     assert(cutPoint > 0) { "Invalid range representation: $this" }
     return IntRange(this.substring(0, cutPoint).toInt(), this.substring(cutPoint + 1).toInt())
 }
+
+fun String.asInts(separator: Char = ','): List<Int> = this.split(separator).map { it.toInt() }
+
+fun String.asLongs(separator: Char = ','): List<Long> = this.split(separator).map { it.toLong() }

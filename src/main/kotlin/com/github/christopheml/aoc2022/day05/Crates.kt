@@ -1,30 +1,28 @@
-package com.github.christopheml.aoc2022
+package com.github.christopheml.aoc2022.day05
 
 import com.github.christopheml.aoc2022.common.Input
-import com.github.christopheml.aoc2022.common.TextInput
 import com.github.christopheml.aoc2022.common.runners.Solution
 
-class Crates : Solution<String, String>(5) {
-    override fun partOne(input: Input<String>): String =
+class Crates : Solution<String>(5) {
+    override fun partOne(input: Input): String =
         Crane(input)
             .crateMover9000()
             .topCrates()
 
-    override fun partTwo(input: Input<String>): String =
+    override fun partTwo(input: Input): String =
         Crane(input)
             .crateMover9001()
             .topCrates()
 
-    override fun input() = ::TextInput
 }
 
-class Crane(input: Input<String>) {
+class Crane(input: Input) {
 
     private val stacks: List<ArrayDeque<String>>
     private val operations: List<Triple<Int, Int, Int>>
 
     init {
-        val inputParts = input.split("")
+        val inputParts = input.multi.split("")
         stacks = readStacks(inputParts[0])
         operations = readOperations(inputParts[1])
     }

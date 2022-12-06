@@ -1,10 +1,9 @@
 package com.github.christopheml.aoc2022.day02
 
 import com.github.christopheml.aoc2022.common.Input
-import com.github.christopheml.aoc2022.common.TextInput
 import com.github.christopheml.aoc2022.common.runners.Solution
 
-class RockPaperScissors : Solution<String, Int>(2) {
+class RockPaperScissors : Solution<Int>(2) {
 
     private val simpleScore = mapOf(
         'A' to 'X' to 3 + 1,
@@ -30,17 +29,17 @@ class RockPaperScissors : Solution<String, Int>(2) {
         'C' to 'Z' to 6 + 1,
     )
 
-    override fun partOne(input: Input<String>): Int = calculateScore(input, simpleScore)
+    override fun partOne(input: Input): Int = calculateScore(input, simpleScore)
 
-    override fun partTwo(input: Input<String>): Int = calculateScore(input, resultBasedScore)
+    override fun partTwo(input: Input): Int = calculateScore(input, resultBasedScore)
 
-    private fun calculateScore(input: Input<String>, scoring: Map<Pair<Char, Char>, Int>) = input
+    private fun calculateScore(input: Input, scoring: Map<Pair<Char, Char>, Int>) =
+        input.multi
             .asSequence()
-            .filterNot { it.isEmpty() }
             .map { Pair(it[0], it[2]) }
             .sumOf { scoring[it]!! }
 
-    override fun input() = ::TextInput
+
 
 }
 

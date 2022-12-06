@@ -1,43 +1,46 @@
 package com.github.christopheml.aoc2022.common
 
-interface Input<T> {
+class Input(day: Int) {
 
-    fun asList(): List<T>
+    inner class SingleLineInput {
 
-    fun asSequence(): Sequence<T>
+        val value: String = elements.first()
 
-    fun split(separator: T): List<List<T>>
+        fun asInts(separator: Char = ',') = elements.first().asInts(separator)
 
-    fun first(): T
+        fun asLongs(separator: Char = ',') = elements.first().asLongs(separator)
 
-    fun last(): T
+        fun split(separator: Char = ',') = elements.first().split(separator)
 
-}
-
-abstract class ListInput<T>(day: Int, elementMapper: (String) -> T): Input<T> {
-
-    private val elements: List<T>
-
-    init {
-        elements = rawInput(day).map(elementMapper)
     }
 
-    override fun asList(): List<T> = elements
+    inner class MultiLineInput {
 
-    override fun asSequence() = elements.asSequence()
+        fun asList(): List<String> = elements
 
-    override fun split(separator: T): List<List<T>> = elements.split(separator)
+        fun asSequence(): Sequence<String> = elements.asSequence()
 
-    override fun first(): T = elements.first()
+        fun split(separator: String = ""): List<List<String>> = elements.split(separator)
 
-    override fun last(): T = elements.last()
+        fun first(): String = elements.first()
 
-}
+        fun last(): String = elements.last()
 
-class TextInput(day: Int): ListInput<String>(day, { it })
+    }
 
-class IntInput(day: Int): ListInput<Int>(day, String::toInt)
+    private val elements: List<String>
 
-fun rawInput(day: Int): Iterable<String> {
-    return object {}.javaClass.getResource("/inputs/day%02d.txt".format(day))!!.readText().lines()
+    val single: SingleLineInput
+
+    val multi: MultiLineInput
+
+    init {
+        elements = run {
+            val lines = object {}.javaClass.getResource("/inputs/day%02d.txt".format(day))!!.readText().lines()
+            if (lines.last().isEmpty()) lines.dropLast(1) else lines
+        }
+        single = SingleLineInput()
+        multi = MultiLineInput()
+    }
+
 }
